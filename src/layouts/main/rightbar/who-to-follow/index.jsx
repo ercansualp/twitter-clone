@@ -43,8 +43,11 @@ export default function WhoToFollow() {
                                     <div>
                                         <div className="flex items-center"
                                              onMouseOver={() => handleShowUserPreview(31.25, -46.5705, user)}>
-                                            <Link to={`/${user.username}`}><UserFullName
-                                                fullName={user.fullName}/></Link>
+                                            <Link to={`/${user.username}`}>
+                                                <div className="max-w-[125px] overflow-hidden whitespace-nowrap">
+                                                    <UserFullName fullName={user.fullName}/>
+                                                </div>
+                                            </Link>
                                             {
                                                 user.verified ? (
                                                     <Verified/>
@@ -52,14 +55,18 @@ export default function WhoToFollow() {
                                             }
                                         </div>
                                         <span onMouseOver={() => handleShowUserPreview(40, -46.5705, user)}>
-                                <Link to={`/${user.username}`}><UserUsername username={user.username}/></Link>
+                                <Link to={`/${user.username}`}>
+                                    <div className="max-w-[125px] overflow-hidden whitespace-nowrap">
+                                        <UserUsername username={user.username}/>
+                                    </div>
+                                </Link>
                             </span>
                                     </div>
                                     {previewUser && previewUser === user &&
                                         <UserPreview top={userPreviewPosition.top} left={userPreviewPosition.left}
                                                      show={showUserPreview} user={previewUser}/>}
                                 </div>
-                                <div className="flex items-center" id="followBtnContainer">
+                                <div id="followBtnContainer">
                                     <FollowButton/>
                                 </div>
                             </div>

@@ -27,7 +27,7 @@ export default function Rightbar() {
             {
                 pathname === "/messages" ? "" : (
                     <>
-                        {showComponents.search.find(path => path === pathname || path === "*") ? <Search/> : ""}
+                        {showComponents.search.find(path => path === pathname || path === "*" || path.includes("/lists")) ? <Search/> : ""}
                         {
                             showComponents.premium.find(path => path === pathname || path === "*") ? (
                                 <RightbarSection title="Premium'a Abone Ol" moreUrl="" moreVisible={false}>
@@ -45,7 +45,7 @@ export default function Rightbar() {
                             ) : ""
                         }
                         {
-                            showComponents.agenda.find(path => path === pathname || path === "*") ? (
+                            showComponents.agenda.find(path => path === pathname || path === "*" || path.includes("/lists")) ? (
                                 <RightbarSection title="Türkiye gündemleri" moreUrl="/i/trends" moreVisible={true}>
                                     <Agenda/>
                                 </RightbarSection>
