@@ -20,7 +20,7 @@ export default function Footer() {
                 }
                 <More />
                 <span className="my-0.5 pr-3 text-[#71767b] text-[13px] font-normal leading-4">
-                    © 2023 X Corp.
+                    &copy; {new Date().getFullYear()} X Corp.
                 </span>
             </div>
         </div>

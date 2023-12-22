@@ -6,6 +6,7 @@ import UserFullName from "~/components/user-full-name/index.jsx";
 import UserUsername from "~/components/user-username/index.jsx";
 import {whoToFollowUsers} from "~/mock/index.js";
 import Verified from "~/components/verified/index.jsx";
+import {Link} from "react-router-dom";
 
 export default function WhoToFollow() {
     const [userPreviewPosition, setUserPreviewPosition] = useState({top: 0, left: 0});
@@ -24,16 +25,18 @@ export default function WhoToFollow() {
         <>
             {
                 whoToFollowUsers.map((user, index) => (
-                    <SectionItem key={index} path={user.username}>
+                    <SectionItem key={index} path={user.username} type="div">
                         <div className="flex items-center justify-between w-full cursor-pointer">
                             <div className="flex items-center relative" onMouseLeave={handleHiddenUserPreview}>
-                                <div onMouseOver={() => handleShowUserPreview(40, -131.25, user)}
-                                     className="hover:opacity-90 transition-all rounded-full w-[40px] h-[40px] bg-contain mr-3"
-                                     style={{backgroundImage: `url(${user.avatar})`}}/>
+                                <Link to={`/${user.username}`}>
+                                    <div onMouseOver={() => handleShowUserPreview(40, -131.25, user)}
+                                         className="hover:opacity-90 transition-all rounded-full w-[40px] h-[40px] bg-contain mr-3"
+                                         style={{backgroundImage: `url(${user.avatar})`}}/>
+                                </Link>
                                 <div>
                                     <div className="flex items-center"
                                          onMouseOver={() => handleShowUserPreview(31.25, -46.5705, user)}>
-                                        <UserFullName fullName={user.fullName}/>
+                                        <Link to={`/${user.username}`}><UserFullName fullName={user.fullName}/></Link>
                                         {
                                             user.verified ? (
                                                 <Verified/>
@@ -41,7 +44,7 @@ export default function WhoToFollow() {
                                         }
                                     </div>
                                     <span onMouseOver={() => handleShowUserPreview(40, -46.5705, user)}>
-                                <UserUsername username={user.username}/>
+                                <Link to={`/${user.username}`}><UserUsername username={user.username}/></Link>
                             </span>
                                 </div>
                                 {previewUser && previewUser === user &&
@@ -49,7 +52,7 @@ export default function WhoToFollow() {
                                                  show={showUserPreview} user={previewUser}/>}
                             </div>
                             <div className="flex items-center">
-                                <FollowButton/>
+                                <FollowButton />
                             </div>
                         </div>
                     </SectionItem>

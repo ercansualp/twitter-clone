@@ -8,7 +8,7 @@ export default function MainLayout() {
     const {pathname} = useLocation();
     const account = userAccount();
     const showMessagesComponent = ["/", "/explore", "/notifications", `/${account.username}/lists`, "/i/bookmarks", `/${account.username}/communities`, `/${account.username}`];
-    console.log("pathname", pathname);
+
     return (
         <div className="w-[1325px] mx-auto flex min-h-screen">
             <Sidebar />
