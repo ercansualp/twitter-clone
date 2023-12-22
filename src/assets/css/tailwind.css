@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+
+    sol sidebar -> 275px +
+    sol sidebar padding -> 0 8px +
+    sag sidebar -> 350px +
+    sag sidebar margin-right -> 70px +
+    content border -> 0 1px solid rgb(47, 51, 54) +
+    layout -> 1325px +
+*/
+
+body {
+    @apply text-[15px] text-[#e7e9ea] bg-black;
+}
