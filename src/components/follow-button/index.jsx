@@ -4,13 +4,13 @@ import {useState} from "react";
 export default function FollowButton() {
     const [isFollowed, setIsFollowed] = useState(false);
 
-    const handleFollow = (event) => {
-        event.preventDefault();
+    const handleFollow = () => {
         setIsFollowed(!isFollowed);
     }
 
     return (
         <button
+            id="followBtn"
             onClick={handleFollow}
             onMouseOver={(e) => isFollowed ? e.target.textContent = "Takibi bırak" : "Takip ediliyor"}
             onMouseLeave={e => isFollowed ? e.target.textContent = "Takip ediliyor" : "Takibi bırak"}

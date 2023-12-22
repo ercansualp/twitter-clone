@@ -6,56 +6,65 @@ import UserFullName from "~/components/user-full-name/index.jsx";
 import UserUsername from "~/components/user-username/index.jsx";
 import {whoToFollowUsers} from "~/mock/index.js";
 import Verified from "~/components/verified/index.jsx";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 export default function WhoToFollow() {
+    const navigate = useNavigate();
     const [userPreviewPosition, setUserPreviewPosition] = useState({top: 0, left: 0});
     const [showUserPreview, setShowUserPreview] = useState(false);
-    const [previewUser, setPreviewUser] = useState();
+    const [previewUser, setPreviewUser] = useState(undefined);
 
     const handleShowUserPreview = (top, left, user) => {
         setPreviewUser(user);
         setUserPreviewPosition({top, left});
         setShowUserPreview(true);
     }
-
     const handleHiddenUserPreview = () => setShowUserPreview(false);
+
+    const handleNavigate = (event, username) => {
+        if (event.target.id !== "followBtnContainer" && event.target.id !== "followBtn") {
+            navigate(username)
+        }
+    }
 
     return (
         <>
             {
                 whoToFollowUsers.map((user, index) => (
-                    <SectionItem key={index} path={user.username} type="div">
-                        <div className="flex items-center justify-between w-full cursor-pointer">
-                            <div className="flex items-center relative" onMouseLeave={handleHiddenUserPreview}>
-                                <Link to={`/${user.username}`}>
-                                    <div onMouseOver={() => handleShowUserPreview(40, -131.25, user)}
-                                         className="hover:opacity-90 transition-all rounded-full w-[40px] h-[40px] bg-contain mr-3"
-                                         style={{backgroundImage: `url(${user.avatar})`}}/>
-                                </Link>
-                                <div>
-                                    <div className="flex items-center"
-                                         onMouseOver={() => handleShowUserPreview(31.25, -46.5705, user)}>
-                                        <Link to={`/${user.username}`}><UserFullName fullName={user.fullName}/></Link>
-                                        {
-                                            user.verified ? (
-                                                <Verified/>
-                                            ) : ""
-                                        }
-                                    </div>
-                                    <span onMouseOver={() => handleShowUserPreview(40, -46.5705, user)}>
+                    <div key={index} onClick={(event) => handleNavigate(event, user.username)}>
+                        <SectionItem key={index} path={user.username} type="div">
+                            <div className="flex items-center justify-between w-full cursor-pointer">
+                                <div className="flex items-center relative" onMouseLeave={handleHiddenUserPreview}>
+                                    <Link to={`/${user.username}`}>
+                                        <div onMouseOver={() => handleShowUserPreview(40, -131.25, user)}
+                                             className="hover:opacity-90 transition-all rounded-full w-[40px] h-[40px] bg-contain mr-3"
+                                             style={{backgroundImage: `url(${user.avatar})`}}/>
+                                    </Link>
+                                    <div>
+                                        <div className="flex items-center"
+                                             onMouseOver={() => handleShowUserPreview(31.25, -46.5705, user)}>
+                                            <Link to={`/${user.username}`}><UserFullName
+                                                fullName={user.fullName}/></Link>
+                                            {
+                                                user.verified ? (
+                                                    <Verified/>
+                                                ) : ""
+                                            }
+                                        </div>
+                                        <span onMouseOver={() => handleShowUserPreview(40, -46.5705, user)}>
                                 <Link to={`/${user.username}`}><UserUsername username={user.username}/></Link>
                             </span>
+                                    </div>
+                                    {previewUser && previewUser === user &&
+                                        <UserPreview top={userPreviewPosition.top} left={userPreviewPosition.left}
+                                                     show={showUserPreview} user={previewUser}/>}
                                 </div>
-                                {previewUser && previewUser === user &&
-                                    <UserPreview top={userPreviewPosition.top} left={userPreviewPosition.left}
-                                                 show={showUserPreview} user={previewUser}/>}
+                                <div className="flex items-center" id="followBtnContainer">
+                                    <FollowButton/>
+                                </div>
                             </div>
-                            <div className="flex items-center">
-                                <FollowButton />
-                            </div>
-                        </div>
-                    </SectionItem>
+                        </SectionItem>
+                    </div>
                 ))
             }
         </>
